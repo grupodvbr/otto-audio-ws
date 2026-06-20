@@ -1,0 +1,16 @@
+{
+  "name": "otto-audio-ws",
+  "version": "1.0.0",
+  "description": "Servidor WebSocket OTTO Audio",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "dependencies": {
+    "express": "^4.18.3",
+    "ws": "^8.16.0"
+  },
+  "engines": {
+    "node": ">=18"
+  }
+}
