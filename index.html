@@ -1,0 +1,845 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta
+  name="viewport"
+  content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover">
+
+<meta name="theme-color" content="#050505">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black">
+
+<title>OTTO DISPOSITIVO</title>
+
+<style>
+*{
+  margin:0;
+  padding:0;
+  box-sizing:border-box;
+  font-family:Inter,Arial,sans-serif;
+}
+
+:root{
+  --text:#fff;
+  --muted:rgba(255,255,255,.68);
+  --line:rgba(255,255,255,.12);
+  --accent:#1fd47b;
+  --blue:#50b7ff;
+  --red:#ff4d67;
+  --yellow:#f3c84b;
+}
+
+html,
+body{
+  width:100%;
+  min-height:100%;
+  overflow-x:hidden;
+  touch-action:manipulation;
+  -webkit-text-size-adjust:none;
+  overscroll-behavior:none;
+}
+
+body{
+  min-height:100vh;
+  background:
+    radial-gradient(circle at 18% 10%,rgba(80,183,255,.22),transparent 34%),
+    radial-gradient(circle at 86% 12%,rgba(31,212,123,.18),transparent 32%),
+    linear-gradient(135deg,#050505,#10151c 52%,#050505);
+  color:var(--text);
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  padding:22px;
+}
+
+.app{
+  width:min(96vw,920px);
+  display:grid;
+  grid-template-columns:minmax(270px,370px) 1fr;
+  gap:34px;
+  align-items:center;
+  background:rgba(10,12,16,.78);
+  border:1px solid var(--line);
+  box-shadow:0 30px 90px rgba(0,0,0,.58);
+  backdrop-filter:blur(18px);
+  border-radius:28px;
+  padding:36px;
+}
+
+.visual{
+  display:grid;
+  place-items:center;
+}
+
+.mic-wrap{
+  position:relative;
+  width:min(72vw,330px);
+  aspect-ratio:1;
+  display:grid;
+  place-items:center;
+}
+
+.halo{
+  position:absolute;
+  inset:8%;
+  border-radius:50%;
+  background:conic-gradient(from 120deg,var(--accent),var(--blue),#f3c84b,var(--accent));
+  filter:blur(28px);
+  opacity:.18;
+  animation:pulso 2.4s ease-in-out infinite;
+}
+
+.halo.online{
+  opacity:.42;
+}
+
+.mic{
+  position:relative;
+  width:72%;
+  height:72%;
+  border-radius:50%;
+  display:grid;
+  place-items:center;
+  background:
+    radial-gradient(circle at 50% 38%,rgba(255,255,255,.12),transparent 22%),
+    linear-gradient(135deg,#151a22,#050505);
+  border:1px solid rgba(255,255,255,.12);
+  box-shadow:
+    inset 0 0 28px rgba(255,255,255,.08),
+    0 24px 60px rgba(0,0,0,.58);
+  font-size:84px;
+}
+
+.mic.online{
+  box-shadow:
+    inset 0 0 28px rgba(255,255,255,.08),
+    0 0 0 10px rgba(31,212,123,.08),
+    0 24px 60px rgba(0,0,0,.58);
+}
+
+.tag{
+  display:inline-flex;
+  align-items:center;
+  gap:9px;
+  padding:8px 12px;
+  border:1px solid var(--line);
+  border-radius:999px;
+  background:rgba(255,255,255,.06);
+  color:var(--muted);
+  font-size:13px;
+  font-weight:900;
+  text-transform:uppercase;
+}
+
+.dot{
+  width:9px;
+  height:9px;
+  border-radius:50%;
+  background:var(--red);
+  box-shadow:0 0 18px var(--red);
+}
+
+.logo{
+  font-size:clamp(42px,8vw,76px);
+  line-height:.9;
+  font-weight:950;
+  margin-top:20px;
+  letter-spacing:-.06em;
+}
+
+.status{
+  font-size:16px;
+  color:var(--muted);
+  margin-top:12px;
+  min-height:24px;
+  font-weight:700;
+}
+
+.form{
+  margin-top:22px;
+  display:grid;
+  gap:12px;
+}
+
+label{
+  display:grid;
+  gap:7px;
+  color:var(--muted);
+  font-size:12px;
+  font-weight:950;
+  text-transform:uppercase;
+  letter-spacing:.06em;
+}
+
+input,
+select{
+  width:100%;
+  height:50px;
+  border:1px solid rgba(255,255,255,.14);
+  background:rgba(255,255,255,.07);
+  color:#fff;
+  border-radius:15px;
+  padding:0 14px;
+  outline:none;
+  font-size:15px;
+  font-weight:850;
+}
+
+select option{
+  color:#111;
+}
+
+input:focus,
+select:focus{
+  border-color:rgba(80,183,255,.9);
+  box-shadow:0 0 0 4px rgba(80,183,255,.12);
+}
+
+.linha{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:12px;
+}
+
+.botoes{
+  margin-top:14px;
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:12px;
+}
+
+button{
+  border:0;
+  cursor:pointer;
+  font-weight:950;
+  font-size:15px;
+  border-radius:15px;
+  min-height:52px;
+  padding:0 18px;
+}
+
+.btnStart{
+  background:linear-gradient(135deg,var(--accent),var(--blue));
+  color:#06100b;
+  box-shadow:0 18px 42px rgba(31,212,123,.18);
+}
+
+.btnStop{
+  background:rgba(255,255,255,.08);
+  color:#fff;
+  border:1px solid rgba(255,255,255,.13);
+}
+
+.info{
+  margin-top:18px;
+  display:grid;
+  gap:8px;
+}
+
+.item{
+  display:flex;
+  justify-content:space-between;
+  gap:12px;
+  padding:12px 14px;
+  border-radius:15px;
+  background:rgba(255,255,255,.06);
+  border:1px solid rgba(255,255,255,.09);
+  color:var(--muted);
+  font-size:13px;
+  font-weight:800;
+}
+
+.item strong{
+  color:#fff;
+  text-align:right;
+  word-break:break-word;
+}
+
+.aviso{
+  margin-top:16px;
+  color:rgba(255,255,255,.48);
+  font-size:12px;
+  line-height:1.45;
+  font-weight:650;
+}
+
+@keyframes pulso{
+  0%,100%{transform:scale(.96)}
+  50%{transform:scale(1.04)}
+}
+
+@media(max-width:780px){
+  body{
+    padding:14px;
+    align-items:stretch;
+  }
+
+  .app{
+    min-height:calc(100vh - 28px);
+    grid-template-columns:1fr;
+    gap:18px;
+    padding:26px 18px;
+    align-content:center;
+    text-align:center;
+  }
+
+  .mic-wrap{
+    margin:auto;
+    max-width:260px;
+  }
+
+  .linha,
+  .botoes{
+    grid-template-columns:1fr;
+  }
+}
+</style>
+</head>
+
+<body>
+<main class="app">
+  <section class="visual">
+    <div class="mic-wrap">
+      <div id="halo" class="halo"></div>
+      <div id="micIcon" class="mic">🎙️</div>
+    </div>
+  </section>
+
+  <section>
+    <div class="tag">
+      <span id="dot" class="dot"></span>
+      <span id="tagText">Offline</span>
+    </div>
+
+    <h1 class="logo">OTTO<br>ÁUDIO</h1>
+
+    <div id="status" class="status">
+      Configure e toque em iniciar transmissão.
+    </div>
+
+    <section class="form">
+      <label>
+        Nome do dispositivo
+        <input id="nome" placeholder="Ex: Celular Cozinha Villa">
+      </label>
+
+      <div class="linha">
+        <label>
+          Empresa
+          <select id="empresa">
+            <option value="MERCATTO RESTAURANTE">MERCATTO RESTAURANTE</option>
+            <option value="MERCATTO EMPORIO">MERCATTO EMPORIO</option>
+            <option value="DELICIA GOURMET">DELICIA GOURMET</option>
+            <option value="PADARIA DELICIA">PADARIA DELICIA</option>
+            <option value="VILLA GOURMET">VILLA GOURMET</option>
+            <option value="M.KIDS">M.KIDS</option>
+          </select>
+        </label>
+
+        <label>
+          Tipo
+          <select id="tipo">
+            <option value="CELULAR">CELULAR</option>
+            <option value="TABLET">TABLET</option>
+            <option value="COMPUTADOR">COMPUTADOR</option>
+            <option value="TOTEM">TOTEM</option>
+            <option value="TV">TV</option>
+            <option value="OUTRO">OUTRO</option>
+          </select>
+        </label>
+      </div>
+
+      <div class="linha">
+        <label>
+          Unidade
+          <input id="unidade" placeholder="Ex: Mercatto Delícia">
+        </label>
+
+        <label>
+          Setor
+          <input id="setor" placeholder="Ex: Caixa, cozinha, salão">
+        </label>
+      </div>
+    </section>
+
+    <section class="botoes">
+      <button id="iniciar" class="btnStart" type="button">Iniciar transmissão</button>
+      <button id="parar" class="btnStop" type="button">Parar</button>
+    </section>
+
+    <section class="info">
+      <div class="item">
+        <span>Código</span>
+        <strong id="codigoTela">-</strong>
+      </div>
+
+      <div class="item">
+        <span>Conexão</span>
+        <strong id="conexaoTela">Desconectado</strong>
+      </div>
+
+      <div class="item">
+        <span>Microfone</span>
+        <strong id="micTela">Desligado</strong>
+      </div>
+
+      <div class="item">
+        <span>Ouvintes</span>
+        <strong id="ouvintesTela">0</strong>
+      </div>
+    </section>
+
+    <p class="aviso">
+      O navegador vai pedir permissão do microfone. Enquanto esta tela estiver aberta, a dashboard poderá ouvir este dispositivo.
+    </p>
+  </section>
+</main>
+
+<script>
+const CONFIG = {
+  SECRET: "otto_audio_2026",
+
+  /*
+    IMPORTANTE:
+    A Vercel não segura WebSocket direto.
+    Coloque aqui a URL do seu servidor WebSocket publicado no Render, Railway ou VPS.
+
+    Exemplo:
+    WS_URL: "wss://otto-audio-ws.onrender.com",
+  */
+  WS_URL: "wss://SEU-SERVIDOR-OTTO-AUDIO.onrender.com",
+
+  HEARTBEAT_MS: 3000
+};
+
+let ws = null;
+let stream = null;
+let deviceId = null;
+let heartbeatTimer = null;
+let microfoneAtivo = false;
+let reconnectTimer = null;
+
+const peerConnections = new Map();
+
+const $ = (id) => document.getElementById(id);
+
+function detectarNavegador(){
+  const ua = navigator.userAgent.toLowerCase();
+
+  if(ua.includes("edg/")) return "Microsoft Edge";
+  if(ua.includes("opr/") || ua.includes("opera")) return "Opera";
+  if(ua.includes("chrome") && !ua.includes("edg/")) return "Google Chrome";
+  if(ua.includes("safari") && !ua.includes("chrome")) return "Safari";
+  if(ua.includes("firefox")) return "Firefox";
+
+  return "Desconhecido";
+}
+
+function detectarSistema(){
+  const ua = navigator.userAgent.toLowerCase();
+
+  if(ua.includes("windows")) return "Windows";
+  if(ua.includes("android")) return "Android";
+  if(ua.includes("iphone")) return "iPhone";
+  if(ua.includes("ipad")) return "iPad";
+  if(ua.includes("mac os")) return "macOS";
+  if(ua.includes("linux")) return "Linux";
+
+  return "Desconhecido";
+}
+
+function tipoAutomatico(){
+  const sistema = detectarSistema();
+  const largura = window.innerWidth || screen.width || 0;
+
+  if(sistema === "Android" || sistema === "iPhone"){
+    return largura >= 700 ? "TABLET" : "CELULAR";
+  }
+
+  if(sistema === "iPad") return "TABLET";
+
+  return "COMPUTADOR";
+}
+
+function nomeAutomatico(){
+  const sistema = detectarSistema();
+
+  if(sistema === "Windows") return "COMPUTADOR WINDOWS";
+  if(sistema === "Android") return "CELULAR ANDROID";
+  if(sistema === "iPhone") return "IPHONE";
+  if(sistema === "iPad") return "IPAD";
+  if(sistema === "macOS") return "COMPUTADOR MAC";
+  if(sistema === "Linux") return "COMPUTADOR LINUX";
+
+  return "DISPOSITIVO ÁUDIO";
+}
+
+function gerarDeviceId(){
+  const salvo = localStorage.getItem("otto_audio_device_id");
+
+  if(salvo) return salvo;
+
+  const novo = "AUDIO-" + Date.now() + "-" + Math.random().toString(16).slice(2, 10).toUpperCase();
+
+  localStorage.setItem("otto_audio_device_id", novo);
+
+  return novo;
+}
+
+function carregarCampos(){
+  deviceId = gerarDeviceId();
+
+  $("codigoTela").textContent = deviceId;
+
+  $("nome").value = localStorage.getItem("otto_audio_nome") || nomeAutomatico();
+  $("empresa").value = localStorage.getItem("otto_audio_empresa") || "MERCATTO RESTAURANTE";
+  $("tipo").value = localStorage.getItem("otto_audio_tipo") || tipoAutomatico();
+  $("unidade").value = localStorage.getItem("otto_audio_unidade") || "";
+  $("setor").value = localStorage.getItem("otto_audio_setor") || "";
+}
+
+function salvarCampos(){
+  localStorage.setItem("otto_audio_nome", $("nome").value.trim());
+  localStorage.setItem("otto_audio_empresa", $("empresa").value.trim());
+  localStorage.setItem("otto_audio_tipo", $("tipo").value.trim());
+  localStorage.setItem("otto_audio_unidade", $("unidade").value.trim());
+  localStorage.setItem("otto_audio_setor", $("setor").value.trim());
+}
+
+function payloadDispositivo(type){
+  salvarCampos();
+
+  return {
+    type,
+    secret: CONFIG.SECRET,
+    deviceId,
+    nome: $("nome").value.trim() || nomeAutomatico(),
+    empresa: $("empresa").value.trim(),
+    unidade: $("unidade").value.trim(),
+    setor: $("setor").value.trim(),
+    tipo: $("tipo").value.trim(),
+    navegador: detectarNavegador(),
+    sistema: detectarSistema(),
+    plataforma: navigator.platform || "",
+    idioma: navigator.language || "",
+    larguraTela: window.screen.width || window.innerWidth || 0,
+    alturaTela: window.screen.height || window.innerHeight || 0,
+    microfoneAtivo
+  };
+}
+
+function enviar(payload){
+  if(!ws || ws.readyState !== WebSocket.OPEN) return false;
+
+  ws.send(JSON.stringify(payload));
+  return true;
+}
+
+function setStatus(texto){
+  $("status").textContent = texto;
+}
+
+function setTag(texto, cor){
+  $("tagText").textContent = texto;
+  $("dot").style.background = cor;
+  $("dot").style.boxShadow = `0 0 18px ${cor}`;
+}
+
+function visualOnline(){
+  $("halo").classList.add("online");
+  $("micIcon").classList.add("online");
+  $("conexaoTela").textContent = "Online";
+  $("micTela").textContent = microfoneAtivo ? "Ativo" : "Desligado";
+  setTag(microfoneAtivo ? "Transmitindo" : "Online", microfoneAtivo ? "#1fd47b" : "#f3c84b");
+}
+
+function visualOffline(){
+  $("halo").classList.remove("online");
+  $("micIcon").classList.remove("online");
+  $("conexaoTela").textContent = "Offline";
+  $("micTela").textContent = microfoneAtivo ? "Ativo" : "Desligado";
+  setTag("Offline", "#ff4d67");
+}
+
+function conectarWS(){
+  if(ws && (ws.readyState === WebSocket.OPEN || ws.readyState === WebSocket.CONNECTING)){
+    return;
+  }
+
+  ws = new WebSocket(CONFIG.WS_URL);
+
+  ws.onopen = () => {
+    enviar(payloadDispositivo("device-register"));
+    setStatus("Conectado ao servidor. Pronto para transmitir.");
+    visualOnline();
+
+    if(heartbeatTimer) clearInterval(heartbeatTimer);
+
+    heartbeatTimer = setInterval(() => {
+      enviar(payloadDispositivo("device-heartbeat"));
+    }, CONFIG.HEARTBEAT_MS);
+  };
+
+  ws.onmessage = async (event) => {
+    let msg = {};
+
+    try{
+      msg = JSON.parse(event.data);
+    }catch(e){
+      return;
+    }
+
+    if(msg.type === "device-registered"){
+      visualOnline();
+      setStatus(microfoneAtivo ? "Transmitindo áudio ao vivo." : "Online. Microfone ainda desligado.");
+      return;
+    }
+
+    if(msg.type === "heartbeat-ok"){
+      visualOnline();
+      return;
+    }
+
+    if(msg.type === "viewer-request"){
+      await criarOfertaParaDashboard(msg.viewerId);
+      atualizarOuvintes();
+      return;
+    }
+
+    if(msg.type === "webrtc-answer"){
+      const pc = peerConnections.get(msg.viewerId);
+
+      if(pc && msg.answer){
+        await pc.setRemoteDescription(new RTCSessionDescription(msg.answer));
+      }
+
+      return;
+    }
+
+    if(msg.type === "webrtc-ice"){
+      const pc = peerConnections.get(msg.viewerId);
+
+      if(pc && msg.candidate){
+        try{
+          await pc.addIceCandidate(new RTCIceCandidate(msg.candidate));
+        }catch(error){}
+      }
+
+      return;
+    }
+
+    if(msg.type === "viewer-disconnected"){
+      fecharPeer(msg.viewerId);
+      atualizarOuvintes();
+      return;
+    }
+
+    if(msg.type === "error"){
+      setStatus(msg.message || "Erro de conexão.");
+      return;
+    }
+  };
+
+  ws.onclose = () => {
+    visualOffline();
+    setStatus("Conexão caiu. Tentando reconectar...");
+
+    if(heartbeatTimer) clearInterval(heartbeatTimer);
+
+    if(reconnectTimer) clearTimeout(reconnectTimer);
+
+    reconnectTimer = setTimeout(() => {
+      conectarWS();
+    }, 2000);
+  };
+
+  ws.onerror = () => {
+    visualOffline();
+    setStatus("Erro no WebSocket. Verifique se o servidor OTTO Áudio está online.");
+  };
+}
+
+async function iniciarMicrofone(){
+  if(stream){
+    microfoneAtivo = true;
+    enviar(payloadDispositivo("device-heartbeat"));
+    visualOnline();
+    return;
+  }
+
+  try{
+    stream = await navigator.mediaDevices.getUserMedia({
+      audio:{
+        echoCancellation:true,
+        noiseSuppression:true,
+        autoGainControl:true
+      },
+      video:false
+    });
+
+    microfoneAtivo = true;
+
+    enviar(payloadDispositivo("device-heartbeat"));
+
+    visualOnline();
+    setStatus("Transmitindo áudio ao vivo. A dashboard já pode ouvir.");
+
+  }catch(error){
+    microfoneAtivo = false;
+    $("micTela").textContent = "Bloqueado";
+    setStatus("Microfone bloqueado. Libere a permissão no navegador.");
+    setTag("Bloqueado", "#ff4d67");
+  }
+}
+
+function pararMicrofone(){
+  microfoneAtivo = false;
+
+  if(stream){
+    stream.getTracks().forEach((track) => track.stop());
+    stream = null;
+  }
+
+  for(const viewerId of peerConnections.keys()){
+    fecharPeer(viewerId);
+  }
+
+  enviar(payloadDispositivo("device-heartbeat"));
+
+  $("micTela").textContent = "Desligado";
+  $("ouvintesTela").textContent = "0";
+  setStatus("Transmissão parada.");
+  setTag("Online", "#f3c84b");
+}
+
+async function criarOfertaParaDashboard(viewerId){
+  if(!stream){
+    await iniciarMicrofone();
+  }
+
+  if(!stream){
+    enviar({
+      type:"webrtc-error",
+      secret:CONFIG.SECRET,
+      viewerId,
+      message:"Microfone não disponível."
+    });
+    return;
+  }
+
+  fecharPeer(viewerId);
+
+  const pc = new RTCPeerConnection({
+    iceServers:[
+      { urls:"stun:stun.l.google.com:19302" },
+      { urls:"stun:stun1.l.google.com:19302" }
+    ]
+  });
+
+  peerConnections.set(viewerId, pc);
+
+  stream.getAudioTracks().forEach((track) => {
+    pc.addTrack(track, stream);
+  });
+
+  pc.onicecandidate = (event) => {
+    if(event.candidate){
+      enviar({
+        type:"webrtc-ice",
+        secret:CONFIG.SECRET,
+        viewerId,
+        candidate:event.candidate
+      });
+    }
+  };
+
+  pc.onconnectionstatechange = () => {
+    if(["failed","disconnected","closed"].includes(pc.connectionState)){
+      fecharPeer(viewerId);
+      atualizarOuvintes();
+    }
+  };
+
+  const offer = await pc.createOffer({
+    offerToReceiveAudio:false,
+    offerToReceiveVideo:false
+  });
+
+  await pc.setLocalDescription(offer);
+
+  enviar({
+    type:"webrtc-offer",
+    secret:CONFIG.SECRET,
+    viewerId,
+    offer
+  });
+
+  atualizarOuvintes();
+}
+
+function fecharPeer(viewerId){
+  const pc = peerConnections.get(viewerId);
+
+  if(pc){
+    try{
+      pc.close();
+    }catch(error){}
+  }
+
+  peerConnections.delete(viewerId);
+}
+
+function atualizarOuvintes(){
+  $("ouvintesTela").textContent = String(peerConnections.size);
+}
+
+$("iniciar").addEventListener("click", async () => {
+  conectarWS();
+  await iniciarMicrofone();
+});
+
+$("parar").addEventListener("click", () => {
+  pararMicrofone();
+});
+
+["nome","empresa","tipo","unidade","setor"].forEach((id) => {
+  $(id).addEventListener("input", () => {
+    salvarCampos();
+    enviar(payloadDispositivo("device-heartbeat"));
+  });
+
+  $(id).addEventListener("change", () => {
+    salvarCampos();
+    enviar(payloadDispositivo("device-heartbeat"));
+  });
+});
+
+window.addEventListener("online", () => {
+  conectarWS();
+});
+
+window.addEventListener("offline", () => {
+  visualOffline();
+  setStatus("Sem internet.");
+});
+
+document.addEventListener("visibilitychange", () => {
+  if(!document.hidden){
+    conectarWS();
+    enviar(payloadDispositivo("device-heartbeat"));
+  }
+});
+
+carregarCampos();
+visualOffline();
+
+/*
+  Não conectamos automaticamente ao abrir a página.
+  A conexão inicia quando clicar em "Iniciar transmissão".
+  Isso evita erro repetido no console caso o servidor WebSocket ainda não esteja publicado.
+*/
+</script>
+</body>
+</html>
