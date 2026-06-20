@@ -1,0 +1,1099 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta
+  name="viewport"
+  content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover">
+
+<title>Dashboard OTTO Áudio</title>
+
+<style>
+*{
+  margin:0;
+  padding:0;
+  box-sizing:border-box;
+  font-family:Inter,Arial,sans-serif;
+}
+
+:root{
+  --bg:#eef6ff;
+  --card:#ffffff;
+  --text:#0f172a;
+  --muted:#64748b;
+  --line:rgba(148,163,184,.28);
+  --blue:#2563eb;
+  --green:#16a34a;
+  --red:#dc2626;
+  --yellow:#f59e0b;
+}
+
+body{
+  min-height:100vh;
+  background:
+    radial-gradient(circle at top left,rgba(37,99,235,.16),transparent 30%),
+    linear-gradient(135deg,#eef6ff,#f8fafc);
+  color:var(--text);
+  overflow-x:hidden;
+}
+
+.app{
+  width:100%;
+  min-height:100vh;
+  padding:18px;
+}
+
+.topo{
+  background:rgba(255,255,255,.94);
+  border:1px solid var(--line);
+  border-radius:28px;
+  padding:24px;
+  box-shadow:0 18px 55px rgba(15,23,42,.08);
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  gap:18px;
+  margin-bottom:18px;
+}
+
+.titulo{
+  display:flex;
+  align-items:center;
+  gap:15px;
+  min-width:0;
+}
+
+.icone{
+  width:60px;
+  height:60px;
+  border-radius:22px;
+  background:linear-gradient(135deg,#2563eb,#22c55e);
+  color:#fff;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-size:30px;
+  box-shadow:0 16px 40px rgba(37,99,235,.28);
+  flex:none;
+}
+
+h1{
+  font-size:clamp(25px,3vw,40px);
+  font-weight:950;
+  letter-spacing:-.07em;
+  line-height:1;
+}
+
+.sub{
+  margin-top:7px;
+  color:var(--muted);
+  font-size:14px;
+  font-weight:750;
+}
+
+.tempoReal{
+  display:flex;
+  flex-wrap:wrap;
+  gap:10px;
+  justify-content:flex-end;
+}
+
+.pill{
+  height:42px;
+  padding:0 14px;
+  border-radius:999px;
+  border:1px solid var(--line);
+  background:#fff;
+  display:flex;
+  align-items:center;
+  gap:8px;
+  color:#1e293b;
+  font-size:13px;
+  font-weight:900;
+  box-shadow:0 8px 20px rgba(15,23,42,.05);
+}
+
+.pulse{
+  width:10px;
+  height:10px;
+  border-radius:999px;
+  background:#22c55e;
+  box-shadow:0 0 0 0 rgba(34,197,94,.5);
+  animation:pulse 1.3s infinite;
+}
+
+@keyframes pulse{
+  0%{box-shadow:0 0 0 0 rgba(34,197,94,.55)}
+  70%{box-shadow:0 0 0 9px rgba(34,197,94,0)}
+  100%{box-shadow:0 0 0 0 rgba(34,197,94,0)}
+}
+
+.resumo{
+  display:grid;
+  grid-template-columns:repeat(4,minmax(0,1fr));
+  gap:14px;
+  margin-bottom:18px;
+}
+
+.cardResumo{
+  background:#fff;
+  border:1px solid var(--line);
+  border-radius:24px;
+  padding:20px;
+  box-shadow:0 14px 42px rgba(15,23,42,.07);
+}
+
+.cardResumo span{
+  color:var(--muted);
+  font-size:12px;
+  font-weight:950;
+  letter-spacing:.07em;
+  text-transform:uppercase;
+}
+
+.cardResumo strong{
+  display:block;
+  margin-top:10px;
+  font-size:clamp(32px,4vw,48px);
+  font-weight:950;
+  letter-spacing:-.08em;
+  line-height:1;
+}
+
+.total strong{color:var(--blue)}
+.online strong{color:var(--green)}
+.instavel strong{color:var(--yellow)}
+.offline strong{color:var(--red)}
+
+.filtros{
+  background:#fff;
+  border:1px solid var(--line);
+  border-radius:24px;
+  padding:14px;
+  box-shadow:0 14px 42px rgba(15,23,42,.06);
+  display:grid;
+  grid-template-columns:1.4fr 1fr 1fr auto;
+  gap:12px;
+  margin-bottom:18px;
+}
+
+input,
+select,
+button{
+  height:50px;
+  border-radius:17px;
+  border:1px solid rgba(148,163,184,.32);
+  background:#f8fafc;
+  padding:0 14px;
+  color:#0f172a;
+  font-size:14px;
+  font-weight:850;
+  outline:none;
+}
+
+input:focus,
+select:focus{
+  border-color:rgba(37,99,235,.9);
+  box-shadow:0 0 0 4px rgba(37,99,235,.10);
+  background:#fff;
+}
+
+button{
+  border:none;
+  cursor:pointer;
+  color:#fff;
+  background:linear-gradient(135deg,#2563eb,#22c55e);
+  box-shadow:0 13px 32px rgba(37,99,235,.24);
+}
+
+button:active{
+  transform:scale(.98);
+}
+
+.lista{
+  display:grid;
+  gap:12px;
+}
+
+.device{
+  background:#fff;
+  border:1px solid var(--line);
+  border-radius:24px;
+  padding:18px;
+  box-shadow:0 14px 42px rgba(15,23,42,.06);
+  display:grid;
+  grid-template-columns:auto 1.4fr 1fr 1fr 1fr auto;
+  gap:16px;
+  align-items:center;
+}
+
+.dot{
+  width:18px;
+  height:18px;
+  border-radius:999px;
+  background:var(--red);
+  box-shadow:0 0 0 7px rgba(220,38,38,.10);
+}
+
+.dot.online{
+  background:var(--green);
+  box-shadow:0 0 0 7px rgba(22,163,74,.12);
+}
+
+.dot.instavel{
+  background:var(--yellow);
+  box-shadow:0 0 0 7px rgba(245,158,11,.13);
+}
+
+.nome{
+  min-width:0;
+}
+
+.nome strong{
+  display:block;
+  color:#0f172a;
+  font-size:18px;
+  font-weight:950;
+  letter-spacing:-.04em;
+  white-space:nowrap;
+  overflow:hidden;
+  text-overflow:ellipsis;
+}
+
+.nome span{
+  display:block;
+  margin-top:5px;
+  color:var(--muted);
+  font-size:12px;
+  font-weight:800;
+  white-space:nowrap;
+  overflow:hidden;
+  text-overflow:ellipsis;
+}
+
+.info{
+  min-width:0;
+}
+
+.info small{
+  display:block;
+  color:var(--muted);
+  font-size:11px;
+  font-weight:950;
+  text-transform:uppercase;
+  letter-spacing:.07em;
+  margin-bottom:5px;
+}
+
+.info strong{
+  display:block;
+  color:#1e293b;
+  font-size:13px;
+  font-weight:900;
+  white-space:nowrap;
+  overflow:hidden;
+  text-overflow:ellipsis;
+}
+
+.acoes{
+  display:flex;
+  gap:9px;
+  justify-content:flex-end;
+  align-items:center;
+}
+
+.btnOuvir{
+  height:42px;
+  min-width:100px;
+  padding:0 13px;
+  border-radius:999px;
+  background:linear-gradient(135deg,#16a34a,#22c55e);
+  color:#fff;
+  font-size:12px;
+  font-weight:950;
+  box-shadow:none;
+}
+
+.btnParar{
+  height:42px;
+  min-width:90px;
+  padding:0 13px;
+  border-radius:999px;
+  background:#fee2e2;
+  color:#991b1b;
+  font-size:12px;
+  font-weight:950;
+  box-shadow:none;
+}
+
+.tag{
+  height:38px;
+  padding:0 13px;
+  border-radius:999px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  text-transform:uppercase;
+  font-size:12px;
+  font-weight:950;
+  letter-spacing:.05em;
+  white-space:nowrap;
+}
+
+.tag.online{
+  background:#dcfce7;
+  color:#166534;
+}
+
+.tag.instavel{
+  background:#fef3c7;
+  color:#92400e;
+}
+
+.tag.offline{
+  background:#fee2e2;
+  color:#991b1b;
+}
+
+.playerBox{
+  position:fixed;
+  left:18px;
+  right:18px;
+  bottom:18px;
+  z-index:50;
+  background:#0f172a;
+  color:#fff;
+  border-radius:24px;
+  padding:14px;
+  box-shadow:0 20px 80px rgba(15,23,42,.35);
+  display:none;
+  gap:12px;
+  align-items:center;
+  border:1px solid rgba(255,255,255,.12);
+}
+
+.playerBox.ativo{
+  display:grid;
+  grid-template-columns:1fr auto;
+}
+
+.playerBox strong{
+  display:block;
+  font-size:15px;
+  font-weight:950;
+}
+
+.playerBox span{
+  display:block;
+  color:rgba(255,255,255,.65);
+  font-size:12px;
+  font-weight:750;
+  margin-top:3px;
+}
+
+.playerBox audio{
+  width:min(360px,42vw);
+}
+
+.vazio{
+  background:#fff;
+  border:1px dashed rgba(148,163,184,.45);
+  border-radius:24px;
+  padding:38px;
+  color:var(--muted);
+  font-size:15px;
+  font-weight:850;
+  text-align:center;
+}
+
+.erro{
+  background:#fef2f2;
+  color:#991b1b;
+  border:1px solid #fecaca;
+  border-radius:20px;
+  padding:14px;
+  margin-bottom:18px;
+  font-size:13px;
+  font-weight:800;
+  display:none;
+  white-space:pre-wrap;
+}
+
+.erro.ativo{
+  display:block;
+}
+
+@media(max-width:1180px){
+  .device{
+    grid-template-columns:auto 1fr 1fr;
+  }
+
+  .acoes{
+    grid-column:1/4;
+    justify-content:stretch;
+  }
+
+  .acoes button{
+    flex:1;
+  }
+
+  .tag{
+    grid-column:1/4;
+    width:100%;
+  }
+}
+
+@media(max-width:900px){
+  .topo{
+    flex-direction:column;
+    align-items:stretch;
+  }
+
+  .tempoReal{
+    justify-content:flex-start;
+  }
+
+  .resumo{
+    grid-template-columns:repeat(2,minmax(0,1fr));
+  }
+
+  .filtros{
+    grid-template-columns:1fr 1fr;
+  }
+
+  .filtros button{
+    grid-column:1/3;
+    width:100%;
+  }
+}
+
+@media(max-width:620px){
+  .app{
+    padding:10px;
+    padding-bottom:126px;
+  }
+
+  .topo{
+    border-radius:22px;
+    padding:18px;
+  }
+
+  .icone{
+    width:50px;
+    height:50px;
+    border-radius:18px;
+    font-size:25px;
+  }
+
+  .resumo{
+    gap:10px;
+  }
+
+  .cardResumo{
+    border-radius:20px;
+    padding:16px;
+  }
+
+  .filtros{
+    grid-template-columns:1fr;
+  }
+
+  .filtros button{
+    grid-column:auto;
+  }
+
+  .device{
+    grid-template-columns:auto 1fr;
+    gap:12px;
+    border-radius:20px;
+    padding:16px;
+    align-items:flex-start;
+  }
+
+  .device .info{
+    grid-column:2/3;
+  }
+
+  .tag,
+  .acoes{
+    grid-column:1/3;
+  }
+
+  .nome strong{
+    white-space:normal;
+  }
+
+  .playerBox{
+    left:10px;
+    right:10px;
+    bottom:10px;
+    grid-template-columns:1fr;
+  }
+
+  .playerBox.ativo{
+    grid-template-columns:1fr;
+  }
+
+  .playerBox audio{
+    width:100%;
+  }
+}
+</style>
+</head>
+
+<body>
+<main class="app">
+  <header class="topo">
+    <div class="titulo">
+      <div class="icone">🎧</div>
+      <div>
+        <h1>Dashboard OTTO Áudio</h1>
+        <p class="sub">Ouça ao vivo os dispositivos autorizados</p>
+      </div>
+    </div>
+
+    <div class="tempoReal">
+      <div class="pill">
+        <span class="pulse"></span>
+        Tempo real
+      </div>
+
+      <div class="pill" id="ultimaAtualizacao">
+        Última: -
+      </div>
+    </div>
+  </header>
+
+  <section class="resumo">
+    <div class="cardResumo total">
+      <span>Total</span>
+      <strong id="total">0</strong>
+    </div>
+
+    <div class="cardResumo online">
+      <span>Online</span>
+      <strong id="online">0</strong>
+    </div>
+
+    <div class="cardResumo instavel">
+      <span>Instável</span>
+      <strong id="instavel">0</strong>
+    </div>
+
+    <div class="cardResumo offline">
+      <span>Offline</span>
+      <strong id="offline">0</strong>
+    </div>
+  </section>
+
+  <section class="filtros">
+    <input id="busca" placeholder="Buscar nome, empresa, setor, IP..." oninput="filtrarLocal()">
+
+    <select id="empresa" onchange="filtrarLocal()">
+      <option value="">Todas as empresas</option>
+      <option value="MERCATTO RESTAURANTE">MERCATTO RESTAURANTE</option>
+      <option value="MERCATTO EMPORIO">MERCATTO EMPORIO</option>
+      <option value="DELICIA GOURMET">DELICIA GOURMET</option>
+      <option value="PADARIA DELICIA">PADARIA DELICIA</option>
+      <option value="VILLA GOURMET">VILLA GOURMET</option>
+      <option value="M.KIDS">M.KIDS</option>
+    </select>
+
+    <select id="status" onchange="filtrarLocal()">
+      <option value="">Todos os status</option>
+      <option value="online">Online</option>
+      <option value="instavel">Instável</option>
+      <option value="offline">Offline</option>
+    </select>
+
+    <button type="button" onclick="pedirLista()">Atualizar</button>
+  </section>
+
+  <div id="erro" class="erro"></div>
+
+  <section id="lista" class="lista"></section>
+</main>
+
+<div id="playerBox" class="playerBox">
+  <div>
+    <strong id="playerNome">Nenhum dispositivo</strong>
+    <span id="playerStatus">Clique em ouvir para iniciar.</span>
+  </div>
+
+  <audio id="audioPlayer" autoplay controls playsinline></audio>
+</div>
+
+<script>
+const CONFIG = {
+  SECRET: "otto_audio_2026",
+
+  /*
+    IMPORTANTE:
+    A Vercel não segura WebSocket direto.
+    Coloque aqui a URL do seu servidor WebSocket publicado no Render, Railway ou VPS.
+
+    Exemplo:
+    WS_URL: "wss://otto-audio-ws.onrender.com",
+  */
+  WS_URL: "wss://SEU-SERVIDOR-OTTO-AUDIO.onrender.com"
+};
+
+let ws = null;
+let reconnectTimer = null;
+let listaTimer = null;
+let dispositivosOriginais = [];
+
+const pcs = new Map();
+const viewerPorDevice = new Map();
+
+const $ = (id) => document.getElementById(id);
+
+function escapar(valor){
+  return String(valor ?? "")
+    .replaceAll("&","&amp;")
+    .replaceAll("<","&lt;")
+    .replaceAll(">","&gt;")
+    .replaceAll('"',"&quot;")
+    .replaceAll("'","&#039;");
+}
+
+function mostrarErro(texto){
+  $("erro").classList.add("ativo");
+  $("erro").textContent = texto;
+}
+
+function limparErro(){
+  $("erro").classList.remove("ativo");
+  $("erro").textContent = "";
+}
+
+function enviar(payload){
+  if(!ws || ws.readyState !== WebSocket.OPEN) return false;
+
+  ws.send(JSON.stringify(payload));
+  return true;
+}
+
+function conectarWS(){
+  if(ws && (ws.readyState === WebSocket.OPEN || ws.readyState === WebSocket.CONNECTING)){
+    return;
+  }
+
+  ws = new WebSocket(CONFIG.WS_URL);
+
+  ws.onopen = () => {
+    if(reconnectTimer){
+      clearTimeout(reconnectTimer);
+      reconnectTimer = null;
+    }
+
+    enviar({
+      type:"admin-register",
+      secret:CONFIG.SECRET
+    });
+
+    limparErro();
+
+    if(listaTimer){
+      clearInterval(listaTimer);
+    }
+
+    listaTimer = setInterval(() => {
+      pedirLista();
+    }, 3000);
+  };
+
+  ws.onmessage = async (event) => {
+    let msg = {};
+
+    try{
+      msg = JSON.parse(event.data);
+    }catch(e){
+      return;
+    }
+
+    if(msg.type === "admin-registered"){
+      pedirLista();
+      return;
+    }
+
+    if(msg.type === "devices-list"){
+      dispositivosOriginais = Array.isArray(msg.devices) ? msg.devices : [];
+      $("ultimaAtualizacao").textContent = "Última: " + new Date().toLocaleTimeString("pt-BR");
+      filtrarLocal();
+      return;
+    }
+
+    if(msg.type === "listen-started"){
+      return;
+    }
+
+    if(msg.type === "listen-error"){
+      mostrarErro(msg.message || "Erro ao ouvir dispositivo.");
+      return;
+    }
+
+    if(msg.type === "device-offline"){
+      pararPorViewer(msg.viewerId);
+      mostrarErro("O dispositivo ficou offline.");
+      pedirLista();
+      return;
+    }
+
+    if(msg.type === "webrtc-offer"){
+      await responderOferta(msg);
+      return;
+    }
+
+    if(msg.type === "webrtc-ice"){
+      const pc = pcs.get(msg.viewerId);
+
+      if(pc && msg.candidate){
+        try{
+          await pc.addIceCandidate(new RTCIceCandidate(msg.candidate));
+        }catch(error){}
+      }
+
+      return;
+    }
+
+    if(msg.type === "error"){
+      mostrarErro(msg.message || "Erro de conexão.");
+      return;
+    }
+  };
+
+  ws.onclose = () => {
+    mostrarErro("Conexão com o servidor caiu. Tentando reconectar...");
+
+    if(listaTimer){
+      clearInterval(listaTimer);
+      listaTimer = null;
+    }
+
+    if(reconnectTimer){
+      clearTimeout(reconnectTimer);
+    }
+
+    reconnectTimer = setTimeout(() => {
+      conectarWS();
+    }, 2500);
+  };
+
+  ws.onerror = () => {
+    mostrarErro("Erro no WebSocket. Verifique se o servidor OTTO Áudio está online.");
+  };
+}
+
+function pedirLista(){
+  enviar({
+    type:"devices-list-request",
+    secret:CONFIG.SECRET
+  });
+}
+
+function formatarData(dataIso){
+  if(!dataIso) return "-";
+
+  try{
+    return new Date(dataIso).toLocaleString("pt-BR");
+  }catch(error){
+    return "-";
+  }
+}
+
+function tempoSemSinal(segundos){
+  const n = Number(segundos || 0);
+
+  if(n <= 3) return "agora";
+  if(n < 60) return n + "s atrás";
+
+  const min = Math.floor(n / 60);
+
+  if(min < 60) return min + "min atrás";
+
+  const horas = Math.floor(min / 60);
+
+  if(horas < 24) return horas + "h atrás";
+
+  const dias = Math.floor(horas / 24);
+
+  return dias + "d atrás";
+}
+
+function statusTexto(status){
+  if(status === "online") return "ONLINE";
+  if(status === "instavel") return "INSTÁVEL";
+  return "OFFLINE";
+}
+
+function atualizarResumo(lista){
+  $("total").textContent = lista.length;
+  $("online").textContent = lista.filter((item) => item.status === "online").length;
+  $("instavel").textContent = lista.filter((item) => item.status === "instavel").length;
+  $("offline").textContent = lista.filter((item) => item.status === "offline").length;
+}
+
+function montarCard(item){
+  const status = item.status || "offline";
+  const ouvindo = viewerPorDevice.has(item.deviceId);
+  const mic = item.microfoneAtivo ? "Ativo" : "Desligado";
+
+  return `
+    <article class="device">
+      <div class="dot ${status}"></div>
+
+      <div class="nome">
+        <strong>${escapar(item.nome || "DISPOSITIVO SEM NOME")}</strong>
+        <span>${escapar(item.deviceId || "-")}</span>
+      </div>
+
+      <div class="info">
+        <small>Empresa / Setor</small>
+        <strong>${escapar(item.empresa || "-")} • ${escapar(item.setor || "-")}</strong>
+      </div>
+
+      <div class="info">
+        <small>Sistema</small>
+        <strong>${escapar(item.sistema || "-")} • ${escapar(item.navegador || "-")}</strong>
+      </div>
+
+      <div class="info">
+        <small>Microfone</small>
+        <strong>${escapar(mic)} • ${tempoSemSinal(item.segundosSemSinal)}</strong>
+      </div>
+
+      <div class="info">
+        <small>Último sinal</small>
+        <strong>${formatarData(item.ultimaConexao)}</strong>
+      </div>
+
+      <div class="tag ${status}">
+        ${statusTexto(status)}
+      </div>
+
+      <div class="acoes">
+        <button
+          type="button"
+          class="btnOuvir"
+          onclick="ouvirDispositivo('${escapar(item.deviceId)}')"
+          ${status === "offline" ? "disabled" : ""}
+        >
+          ${ouvindo ? "Ouvindo" : "Ouvir"}
+        </button>
+
+        <button
+          type="button"
+          class="btnParar"
+          onclick="pararDispositivo('${escapar(item.deviceId)}')"
+        >
+          Parar
+        </button>
+      </div>
+    </article>
+  `;
+}
+
+function renderizar(lista){
+  atualizarResumo(lista);
+
+  const container = $("lista");
+
+  if(!lista.length){
+    container.innerHTML = `
+      <div class="vazio">
+        Nenhum dispositivo encontrado.
+        <br><br>
+        Abra o <b>index.html</b> no aparelho, clique em <b>Iniciar transmissão</b> e libere o microfone.
+      </div>
+    `;
+    return;
+  }
+
+  container.innerHTML = lista.map(montarCard).join("");
+}
+
+function filtrarLocal(){
+  const busca = $("busca").value.trim().toLowerCase();
+  const empresa = $("empresa").value.trim();
+  const status = $("status").value.trim();
+
+  let lista = [...dispositivosOriginais];
+
+  if(empresa){
+    lista = lista.filter((item) => item.empresa === empresa);
+  }
+
+  if(status){
+    lista = lista.filter((item) => item.status === status);
+  }
+
+  if(busca){
+    lista = lista.filter((item) => {
+      const texto = [
+        item.deviceId,
+        item.nome,
+        item.empresa,
+        item.unidade,
+        item.setor,
+        item.tipo,
+        item.sistema,
+        item.navegador,
+        item.ip
+      ].join(" ").toLowerCase();
+
+      return texto.includes(busca);
+    });
+  }
+
+  renderizar(lista);
+}
+
+function nomeDoDevice(deviceId){
+  const item = dispositivosOriginais.find((d) => d.deviceId === deviceId);
+
+  return item?.nome || deviceId;
+}
+
+async function ouvirDispositivo(deviceId){
+  limparErro();
+
+  conectarWS();
+
+  if(viewerPorDevice.has(deviceId)){
+    return;
+  }
+
+  enviar({
+    type:"listen-device",
+    secret:CONFIG.SECRET,
+    deviceId
+  });
+
+  $("playerBox").classList.add("ativo");
+  $("playerNome").textContent = nomeDoDevice(deviceId);
+  $("playerStatus").textContent = "Conectando áudio ao vivo...";
+}
+
+async function responderOferta(msg){
+  const viewerId = msg.viewerId;
+  const deviceId = msg.deviceId;
+
+  pararPorViewer(viewerId, false);
+
+  const pc = new RTCPeerConnection({
+    iceServers:[
+      { urls:"stun:stun.l.google.com:19302" },
+      { urls:"stun:stun1.l.google.com:19302" }
+    ]
+  });
+
+  pcs.set(viewerId, pc);
+  viewerPorDevice.set(deviceId, viewerId);
+
+  pc.ontrack = async (event) => {
+    const audioPlayer = $("audioPlayer");
+    audioPlayer.srcObject = event.streams[0];
+
+    $("playerBox").classList.add("ativo");
+    $("playerNome").textContent = nomeDoDevice(deviceId);
+    $("playerStatus").textContent = "Reproduzindo ao vivo.";
+
+    try{
+      await audioPlayer.play();
+    }catch(error){
+      $("playerStatus").textContent = "Clique no player para liberar o áudio.";
+    }
+
+    filtrarLocal();
+  };
+
+  pc.onicecandidate = (event) => {
+    if(event.candidate){
+      enviar({
+        type:"webrtc-ice",
+        secret:CONFIG.SECRET,
+        viewerId,
+        candidate:event.candidate
+      });
+    }
+  };
+
+  pc.onconnectionstatechange = () => {
+    if(["failed","disconnected","closed"].includes(pc.connectionState)){
+      pararPorViewer(viewerId);
+    }
+  };
+
+  await pc.setRemoteDescription(new RTCSessionDescription(msg.offer));
+
+  const answer = await pc.createAnswer();
+
+  await pc.setLocalDescription(answer);
+
+  enviar({
+    type:"webrtc-answer",
+    secret:CONFIG.SECRET,
+    viewerId,
+    answer
+  });
+}
+
+function pararPorViewer(viewerId, avisarServidor = true){
+  if(!viewerId) return;
+
+  const pc = pcs.get(viewerId);
+
+  if(pc){
+    try{
+      pc.close();
+    }catch(error){}
+  }
+
+  pcs.delete(viewerId);
+
+  for(const [deviceId, id] of viewerPorDevice.entries()){
+    if(id === viewerId){
+      viewerPorDevice.delete(deviceId);
+    }
+  }
+
+  if(avisarServidor){
+    enviar({
+      type:"stop-listen",
+      secret:CONFIG.SECRET,
+      viewerId
+    });
+  }
+
+  if(pcs.size === 0){
+    $("audioPlayer").srcObject = null;
+    $("playerStatus").textContent = "Áudio parado.";
+    $("playerBox").classList.remove("ativo");
+  }
+
+  filtrarLocal();
+}
+
+function pararDispositivo(deviceId){
+  const viewerId = viewerPorDevice.get(deviceId);
+
+  if(viewerId){
+    pararPorViewer(viewerId);
+  }
+}
+
+window.ouvirDispositivo = ouvirDispositivo;
+window.pararDispositivo = pararDispositivo;
+window.pedirLista = pedirLista;
+window.filtrarLocal = filtrarLocal;
+
+conectarWS();
+
+/*
+  A atualização automática da lista é iniciada apenas depois que o WebSocket conecta.
+  Isso evita chamadas repetidas quando o servidor está offline.
+*/
+</script>
+</body>
+</html>
